@@ -11,7 +11,7 @@ class GridSquare(QGraphicsRectItem):
         self.__empty = True # Initialize empty square
         self.setBrush(QtGui.QColor(255, 255, 255)) # Default color
 
-    def is_empty(self):
+    def isEmpty(self):
         return self.__empty
 
     def setPipe(self):
@@ -23,7 +23,7 @@ class GridSquare(QGraphicsRectItem):
         self.setBrush(QtGui.QColor(255, 255, 255))
 
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'):
-        if self.is_empty():
+        if self.isEmpty():
             self.setPipe()
         else:
             self.removePipe()

@@ -7,6 +7,7 @@ from PyQt6.QtGui import QPalette, QColor, QPixmap
 #custom Classes
 from grid import Grid
 from pipes import Pipes
+from pipeAdder import PipeAdder
 
 class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better control over the window customization
 
@@ -24,25 +25,25 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         self.button.clicked.connect(self.printClick) # PyCharm showing error on .connect  # it works regardless
                                                      # widget.clicked.connect(func) # Add functionality
 
-        self.button2 = QPushButton("Green!")
-        self.button2.setFixedSize(QSize(200, 50))
-        self.button2.clicked.connect(lambda: self.switchType("green")) # Lambda function allows the use of parameters here
-        self.button2.setStyleSheet("background-color: white;")
-        self.button3 = QPushButton("Red!")
-        self.button3.setFixedSize(QSize(200, 50))
-        self.button3.clicked.connect(lambda: self.switchType("red"))
-        self.button3.setStyleSheet("background-color: white;")
+        self.clearButton = QPushButton("Clear Grid!")
+        self.clearButton.setFixedSize(QSize(100, 60))
+        self.clearButton.clicked.connect(self.clearGrid)
+        self.clearButton.setStyleSheet("background-color: white;")
 
-        self.straightPipe = QLabel()
-        self.straightPipe.setPixmap(QPixmap('../Images/StraightPipe.png').scaled(50, 50))
-        self.straightPipe.setFixedSize(75, 75)
-        self.straightPipe.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.straightPipe.setStyleSheet("background-color: white;")
-
+        # Layout inits
         baseLayout = QHBoxLayout()
         leftLayout = QVBoxLayout()
         rightLayout = QVBoxLayout()
         topLayout = QHBoxLayout()
+
+        def onClicked(self):
+            print("Sup")
+
+        #Adding pipes to topLayout
+        pipeList = ['../Images/StraightPipe.png', '../Images/CornerPipe.png', '../Images/TPipe.png', '../Images/SectionPipe.png']
+        pipes = PipeAdder(pipeList, 50, topLayout)  # list of pipes, pipe scale, layout
+        pipeButtons = pipes.returnPipeButtons()
+        print(pipeButtons)
 
         baseLayout.addLayout(leftLayout)
         baseLayout.addLayout(rightLayout)
@@ -59,13 +60,12 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         rightLayout.addWidget(pipeBox)
         pipeBox.setLayout(topLayout)
         pipeBox.setStyleSheet("border: 1px solid black; background-color: lightgray;")
-        topLayout.addWidget(self.straightPipe)
-        topLayout.addWidget(self.button2)
-        topLayout.addWidget(self.button3)
+
+        topLayout.addWidget(self.clearButton)
 
         # Bottom right layout
-        # Grid (750, 750, 50) is a good size for a window of size (1280, 900)
-        self.view = Grid(750, 750, 50)
+        # Grid (750, 750, 50) is a good size for a window of size (1280, 850)
+        self.view = Grid(750, 750, 50) # Width, Height, Square size
         self.view.show()
         rightLayout.addWidget(self.view)
 
@@ -74,12 +74,10 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         self.setCentralWidget(widget)
 
     def printClick(self):
-        self.button.setText("You already clicked me.")
-        self.button.setEnabled(False)
+        print("Hey")
 
-    def switchType(self, type):
-        print(type)
-
+    def clearGrid(self):
+        print("Grid cleared")
 
 
 

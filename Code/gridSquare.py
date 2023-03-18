@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QGraphicsRectItem
-from PyQt6 import QtWidgets, QtGui
+from PyQt6 import QtGui
 
 
 class GridSquare(QGraphicsRectItem):

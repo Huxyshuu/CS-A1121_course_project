@@ -28,7 +28,15 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         self.clearButton = QPushButton("Clear Grid!")
         self.clearButton.setFixedSize(QSize(100, 60))
         self.clearButton.clicked.connect(self.clearGrid)
-        self.clearButton.setStyleSheet("background-color: white;")
+        self.clearButton.setStyleSheet("QPushButton {"
+                                            "background-color: white;"
+                                            "font-size: 15px;"
+                                       "}"
+                                       
+                                       "QPushButton:hover {"
+                                            "background-color: rgb(255, 220, 220);"
+                                            "border: 2px solid rgb(235, 100, 100);"
+                                       "}")
 
         # Layout inits
         baseLayout = QHBoxLayout()
@@ -36,14 +44,10 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         rightLayout = QVBoxLayout()
         topLayout = QHBoxLayout()
 
-        def onClicked(self):
-            print("Sup")
-
         #Adding pipes to topLayout
         pipeList = ['../Images/StraightPipe.png', '../Images/CornerPipe.png', '../Images/TPipe.png', '../Images/SectionPipe.png']
         pipes = PipeAdder(pipeList, 50, topLayout)  # list of pipes, pipe scale, layout
         pipeButtons = pipes.returnPipeButtons()
-        print(pipeButtons)
 
         baseLayout.addLayout(leftLayout)
         baseLayout.addLayout(rightLayout)
@@ -59,7 +63,10 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         pipeBox = QWidget()
         rightLayout.addWidget(pipeBox)
         pipeBox.setLayout(topLayout)
-        pipeBox.setStyleSheet("border: 1px solid black; background-color: lightgray;")
+        pipeBox.setStyleSheet("QWidget {"
+                                  "border: 1px solid black; "
+                                  "background-color: rgb(180, 180, 180);"
+                              "}")
 
         topLayout.addWidget(self.clearButton)
 

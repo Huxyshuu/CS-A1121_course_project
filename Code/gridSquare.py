@@ -17,6 +17,7 @@ class GridSquare(QGraphicsRectItem):
     def setPipe(self):
         self.__empty = False
         self.setBrush(QtGui.QColor(20, 20, 20))
+        self.paint
 
     def removePipe(self):
         self.__empty = True

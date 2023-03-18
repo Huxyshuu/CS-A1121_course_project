@@ -21,6 +21,13 @@ class PipeAdder:
 
             self.pipeButtons[pipe[10:][:-4]] = newPipe
 
+        #Add other pipe buttons to each pipe object
+        for toAddButton in self.pipeButtons.items():
+            for otherButton in self.pipeButtons.items():
+                if toAddButton[1].getName() != otherButton[0]:
+                    toAddButton[1].setOtherButtons(otherButton)
+
+
 
 
 

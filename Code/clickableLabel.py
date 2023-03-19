@@ -6,7 +6,7 @@ class ClickableLabel(QtWidgets.QLabel):
         super(ClickableLabel, self).__init__()
         self.__name = None
         self.__selected = False
-        self.setStyleSheet("background-color: white;")
+        self.setStyleSheet("QLabel {background-color: white;}")
         self.__otherButtons = []
 
     def setOtherButtons(self, button):
@@ -26,7 +26,7 @@ class ClickableLabel(QtWidgets.QLabel):
 
     def setSelected(self):
         for button in self.getOtherButtons():
-            button[1].removeSelected()
+            button.removeSelected()
         self.__selected = True
 
     def removeSelected(self):
@@ -37,3 +37,4 @@ class ClickableLabel(QtWidgets.QLabel):
         if not self.isSelected():
             self.setStyleSheet("background-color: rgb(220, 255, 220); border: 2px solid rgb(100, 235, 100);")
             self.setSelected()
+

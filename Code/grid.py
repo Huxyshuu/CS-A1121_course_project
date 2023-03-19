@@ -27,7 +27,7 @@ class Grid(QGraphicsView):
         # Creates a GridSquare object for every position in the grid
         for x in range(floor(width/square_size)):
             for y in range(floor(height/square_size)):
-                sq = GridSquare(x * square_size, y * square_size, square_size, square_size)
+                sq = GridSquare(x * square_size, y * square_size, square_size, square_size, self.scene)
                 self.scene.addItem(sq)
 
         self.setScene(self.scene)

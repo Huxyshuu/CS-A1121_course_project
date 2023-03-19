@@ -1,13 +1,12 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QLabel
 
 from clickableLabel import ClickableLabel
 
 
-class PipeAdder:
+class PipeButtonCreator:
     def __init__(self, pipeList, pipeScale, layout):
-        self.pipeButtons = {}
+        self.pipeButtons = []
 
         for pipe in pipeList:
             newPipe = ClickableLabel()
@@ -19,13 +18,13 @@ class PipeAdder:
 
             layout.addWidget(newPipe)
 
-            self.pipeButtons[pipe[10:][:-4]] = newPipe
+            self.pipeButtons.append(newPipe)
 
         #Add other pipe buttons to each pipe object
-        for toAddButton in self.pipeButtons.items():
-            for otherButton in self.pipeButtons.items():
-                if toAddButton[1].getName() != otherButton[0]:
-                    toAddButton[1].setOtherButtons(otherButton)
+        for toAddButton in self.pipeButtons:
+            for otherButton in self.pipeButtons:
+                if toAddButton.getName() != otherButton.getName():
+                    toAddButton.setOtherButtons(otherButton)
 
 
 

@@ -10,6 +10,7 @@ class PipeButtonCreator:
 
         for pipe in pipeList:
             newPipe = ClickableLabel()
+            newPipe.setType(pipe)
             newPipe.setName(pipe[10:][:-4])
 
             newPipe.setPixmap(QPixmap(pipe).scaled(pipeScale, pipeScale))

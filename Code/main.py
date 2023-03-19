@@ -6,7 +6,7 @@ from PyQt6.QtGui import QPalette, QColor, QPixmap
 
 #custom Classes
 from grid import Grid
-from pipes import Pipes
+from gridPipe import GridPipe
 from pipeButtonCreator import PipeButtonCreator
 
 class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better control over the window customization
@@ -120,7 +120,11 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
         calcLayout.addWidget(self.flowLabel, alignment=Qt.AlignmentFlag.AlignHCenter)
 
-
+        # self.pipe = GridPipe()
+        # self.pipe.setPixmap(QPixmap('../Images/StraightPipe.png').scaled(49, 49))
+        # self.pipe.setOffset(self.x * 50 + 1, self.y * 50)
+        # self.scene.addItem(self.pipe)
+        # self.scene.removeItem(self.pipe)
 
 
 
@@ -150,10 +154,15 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         self.flowLabel.setText("Flow speed: CLICKED m/s")
 
     def clearGrid(self):
-        print("Cleared")
-        # for item in self.view.scene.items():
-        #     # Gets the name of the class to check if it is a pipe and removes it
-        #     if item.__class__.__name__ == 'QGraphicsPixmapItem':
+        for item in self.view.scene.items():
+            # Gets the name of the class to check if it is a pipe and removes it
+            if item.__class__.__name__ == 'GridPipe':
+                self.view.scene.removeItem(item)
+                item.remove()
+
+    def getGrid(self):
+        return self.view
+
 
     # self.pipe = QGraphicsPixmapItem()
     # self.pipe.setPixmap(QPixmap('../Images/StraightPipe.png').scaled(49, 49))

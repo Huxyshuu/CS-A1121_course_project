@@ -8,6 +8,13 @@ class ClickableLabel(QtWidgets.QLabel):
         self.__selected = False
         self.setStyleSheet("QLabel {background-color: white;}")
         self.__otherButtons = []
+        self.__type = ""
+
+    def setType(self, image):
+        self.__type = image
+
+    def getType(self):
+        return self.__type
 
     def setOtherButtons(self, button):
         self.__otherButtons.append(button)
@@ -37,4 +44,7 @@ class ClickableLabel(QtWidgets.QLabel):
         if not self.isSelected():
             self.setStyleSheet("background-color: rgb(220, 255, 220); border: 2px solid rgb(100, 235, 100);")
             self.setSelected()
+            main = self.parent().parent().parent()
+            grid = main.getGrid()
+            grid.setType(self.getType())
 

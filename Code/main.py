@@ -2,12 +2,13 @@ import sys
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout, \
     QGraphicsRectItem, QGraphicsScene, QGraphicsView, QGraphicsLineItem, QGraphicsPixmapItem, QLineEdit
-from PyQt6.QtGui import QPalette, QColor, QPixmap
+from PyQt6.QtGui import QPalette, QColor, QPixmap, QIntValidator
 
 #custom Classes
 from grid import Grid
 from gridPipe import GridPipe
 from pipeButtonCreator import PipeButtonCreator
+
 
 class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better control over the window customization
 
@@ -69,15 +70,16 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         startLabel = QLabel("Set pressure for starting point (kPa):")
         startLabel.setStyleSheet("font-size: 15px;")
         startInput = QLineEdit()
-        # startInput.setFixedWidth(50)
+        startInput.setValidator(QIntValidator(0, 100000))
+        startInput.textChanged.connect(self.changeStartData)
         startInput.setStyleSheet("font-size: 15px;")
-        startData = QLabel("Starting point pressure: NULL kPa")
-        startData.setStyleSheet("font-size: 13px;")
-        startData.setFixedSize(400, 30)
+        self.startData = QLabel("Starting point pressure: 0 kPa")
+        self.startData.setStyleSheet("font-size: 13px;")
+        self.startData.setFixedSize(400, 30)
 
         startInputLayout.addWidget(startLabel)
         startInputLayout.addWidget(startInput)
-        startLayout.addWidget(startData)
+        startLayout.addWidget(self.startData)
 
         # End input
         endLayout = QVBoxLayout()
@@ -89,15 +91,17 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         endLabel = QLabel("Set pressure for end point (kPa):")
         endLabel.setStyleSheet("font-size: 15px;")
         endInput = QLineEdit()
+        endInput.setValidator(QIntValidator(0, 100000))
+        endInput.textChanged.connect(self.changeEndData)
         endInput.setStyleSheet("font-size: 15px;")
         # endInput.setFixedWidth(50)
-        endData = QLabel("End point pressure: NULL kPa")
-        endData.setStyleSheet("font-size: 13px;")
-        endData.setFixedSize(400, 30)
+        self.endData = QLabel("End point pressure: 0 kPa")
+        self.endData.setStyleSheet("font-size: 13px;")
+        self.endData.setFixedSize(400, 30)
 
         endInputLayout.addWidget(endLabel)
         endInputLayout.addWidget(endInput)
-        endLayout.addWidget(endData)
+        endLayout.addWidget(self.endData)
 
         calcLayout = QVBoxLayout()
         leftLayout.addLayout(calcLayout)
@@ -120,12 +124,6 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
         calcLayout.addWidget(self.flowLabel, alignment=Qt.AlignmentFlag.AlignHCenter)
 
-        # self.pipe = GridPipe()
-        # self.pipe.setPixmap(QPixmap('../Images/StraightPipe.png').scaled(49, 49))
-        # self.pipe.setOffset(self.x * 50 + 1, self.y * 50)
-        # self.scene.addItem(self.pipe)
-        # self.scene.removeItem(self.pipe)
-
 
 
         # Top right layout
@@ -142,7 +140,7 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
         # Bottom right layout
         # Grid (750, 750, 50) is a good size for a window of size (1280, 850)
-        self.view = Grid(750, 750, 50) # Width, Height, Square size
+        self.view = Grid(750, 750, 75) # Width, Height, Square size
         self.view.show()
         rightLayout.addWidget(self.view)
 
@@ -151,7 +149,11 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         self.setCentralWidget(widget)
 
     def printClick(self):
-        self.flowLabel.setText("Flow speed: CLICKED m/s")
+        # two lines below extract the pressure from the text for use in the calculation
+        start = int(self.startData.text().split(":")[1][:-4].strip())
+        end = int(self.endData.text().split(":")[1][:-4].strip())
+        result = start + end
+        self.flowLabel.setText("Flow speed: {} m/s".format(result))
 
     def clearGrid(self):
         for item in self.view.scene.items():
@@ -162,6 +164,18 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
     def getGrid(self):
         return self.view
+
+    def changeEndData(self, text):
+        if text:
+            self.endData.setText("End point pressure: {} kPa".format(text))
+        else:
+            self.endData.setText("End point pressure: 0 kPa")
+
+    def changeStartData(self, text):
+        if text:
+            self.startData.setText("Starting point pressure: {} kPa".format(text))
+        else:
+            self.startData.setText("Starting point pressure: 0 kPa")
 
 
     # self.pipe = QGraphicsPixmapItem()

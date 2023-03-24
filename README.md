@@ -64,8 +64,7 @@ The program at its current state is not useful.
 
 
 ### Schedule
-Estimated time spent on the project: ~20 hours
-The initial planned schedule has not been followed, though progress seems to be ahead of the initial estimates.
+Estimated time spent on the project: ~20 hours. The initial planned schedule has not been followed, though progress seems to be ahead of the initial estimates.
 
 
 ### Other

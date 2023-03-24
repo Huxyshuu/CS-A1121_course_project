@@ -1,8 +1,11 @@
+from math import floor
+
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem
 from PyQt6 import QtGui
 
 from gridPipe import GridPipe
+from calcPoint import CalcPoint
 
 
 class GridSquare(QGraphicsRectItem):
@@ -11,10 +14,16 @@ class GridSquare(QGraphicsRectItem):
         # coordinates are divided by the size of the box for easier readability, (1, 1) instead of (w, h)
         self.x = x / w
         self.y = y / h
-        self.__empty = True # Initialize empty square
-        self.setBrush(QtGui.QColor(255, 255, 255)) # Default color
+        self.__empty = True
+        self.__locked = False
         self.grid = grid
         self.pipe = GridPipe(self)
+        if self.x == 0 or self.x == floor(self.grid.width/w) - 1:
+            self.setBrush(QtGui.QColor(255, 230, 230))
+            self.__locked = True
+        else:
+            self.setBrush(QtGui.QColor(255, 255, 255)) # Default color
+
 
 
 
@@ -23,6 +32,9 @@ class GridSquare(QGraphicsRectItem):
 
     def setEmpty(self, empty):
         self.__empty = empty
+
+    def isLocked(self):
+        return self.__locked
 
     # def setPipe(self):
     #     self.__empty = False
@@ -35,7 +47,7 @@ class GridSquare(QGraphicsRectItem):
 
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'):
         if self.isEmpty():
-            self.grid.setPipe(self.pipe, self.x, self.y)
+            self.grid.setPipe(self.pipe, self)
             self.setEmpty(False)
         else:
             self.grid.removePipe(self.pipe)

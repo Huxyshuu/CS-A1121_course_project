@@ -1,5 +1,14 @@
 # Pipe flow
 
+## Checkpoint 2 (12.4.2023)
+
+![Image of tests being completed](https://i.imgur.com/y0YhwgF.png)
+
+- Added two tests
+    - test_Grid(): For testing the adding and deleting of pipes
+    - test_Calculator(): For testing the "Calculate" button, despite currently only summing the given parameters
+
+
 ## Checkpoint 1 (21.3.2023)
 
 Image of the current state of the program

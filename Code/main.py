@@ -114,7 +114,8 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
                                  "QPushButton:hover {"
                                       "background-color: lightgray;"
                                  "}")
-        calcButton.clicked.connect(self.printClick)  # PyCharm showing a warning on .connect, but it works.
+        # PyCharm showing a warning on .connect, but it works.
+        calcButton.clicked.connect(lambda: self.calculateFlow(int(self.startData.text().split(":")[1][:-4].strip()), int(self.endData.text().split(":")[1][:-4].strip())))
 
         calcLayout.addWidget(calcButton, alignment=Qt.AlignmentFlag.AlignHCenter)
 
@@ -148,12 +149,11 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         widget.setLayout(baseLayout)
         self.setCentralWidget(widget)
 
-    def printClick(self):
+    def calculateFlow(self, start, end):
         # two lines below extract the pressure from the text for use in the calculation
-        start = int(self.startData.text().split(":")[1][:-4].strip())
-        end = int(self.endData.text().split(":")[1][:-4].strip())
         result = start + end
         self.flowLabel.setText("Flow speed: {} m/s".format(result))
+        return result
 
     def clearGrid(self):
         for item in self.view.scene.items():
@@ -187,9 +187,10 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
 
 
-app = QApplication(sys.argv)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
 
-window = MainWindow()
-window.show() # Makes the window visible
+    window = MainWindow()
+    window.show() # Makes the window visible
 
-app.exec()
+    app.exec()

@@ -1,5 +1,5 @@
 from math import floor
-from random import choice
+from random import choice, shuffle
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
@@ -18,7 +18,7 @@ class Grid(QGraphicsView):
         self.width = width
         self.height = height
 
-        self.pipeType = ""
+        self.pipeType = "../Images/StraightPipe.png"
         self.square_size = square_size
 
         # whitespace_x and _y remove empty space between the grid and the border
@@ -38,12 +38,14 @@ class Grid(QGraphicsView):
 
         startPoint = []
         endPoint = []
+        self.squares = []
 
         # Creates a GridSquare object for every position in the grid
         for x in range(floor(width/square_size)):
             for y in range(floor(height/square_size)):
                 sq = GridSquare(x * square_size, y * square_size, square_size, square_size, self)
                 self.scene.addItem(sq)
+                self.squares.append(sq)
                 if x == 0:
                     startPoint.append(sq)
                 if x == floor(self.width / square_size) - 1:
@@ -57,6 +59,7 @@ class Grid(QGraphicsView):
 
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+
 
     def setPipe(self, pipe, square):
         if not square.isLocked():
@@ -75,3 +78,20 @@ class Grid(QGraphicsView):
         point.setOffset(square.x * self.square_size, square.y * self.square_size)
         self.scene.addItem(point)
         return
+
+    def pickNSquares(self, n):
+        #For testing
+        pickList = self.squares.copy()
+        shuffle(pickList)
+        wanted = []
+        if n <= len(self.squares):
+            while len(wanted) < n:
+                # Checks if the square in the pickList is one of the border squares
+                # where the start or end point is supposed to go, and ignores those squares.
+                if pickList[0].x != 0 and pickList[0].x != floor(self.width / self.square_size) - 1:
+                    wanted.append(pickList.pop(0))
+                else:
+                    pickList.pop(0)
+
+
+        return wanted

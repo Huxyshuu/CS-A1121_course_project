@@ -60,7 +60,6 @@ class Grid(QGraphicsView):
         if not square.isLocked():
             pipe.setPixmap(QPixmap(self.pipeType).scaled(self.square_size - 1, self.square_size))
             pipe.setOffset(square.x * self.square_size + 1, square.y * self.square_size)
-            print(pipe.transformOriginPoint())
 
             #Handle rotation
             pipe.setRotation(self.pipeRotation)
@@ -74,15 +73,8 @@ class Grid(QGraphicsView):
     def setType(self, image):
         self.pipeType = image
 
-    def rotate(self):
-        if self.pipeRotation == 0:
-            self.pipeRotation = 90
-        elif self.pipeRotation == 90:
-            self.pipeRotation = 180
-        elif self.pipeRotation == 180:
-            self.pipeRotation = 270
-        elif self.pipeRotation == 270:
-            self.pipeRotation = 0
+    def rotate(self, rotation):
+        self.pipeRotation = rotation
 
 
     def setPoint(self, square, image):

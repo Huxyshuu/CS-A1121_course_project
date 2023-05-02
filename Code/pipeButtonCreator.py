@@ -1,11 +1,11 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QTransform
 
 from clickableLabel import ClickableLabel
 
 
 class PipeButtonCreator:
-    def __init__(self, pipeList, pipeScale, layout):
+    def __init__(self, pipeList, pipeScale, layout, rotation):
         self.pipeButtons = []
 
         for pipe in pipeList:
@@ -13,9 +13,13 @@ class PipeButtonCreator:
             newPipe.setType(pipe)
             newPipe.setName(pipe[10:][:-4])
 
-            newPipe.setPixmap(QPixmap(pipe).scaled(pipeScale, pipeScale))
+            transform = QTransform()
+            transform.rotate(rotation)
+
+            newPipe.setPixmap(QPixmap(pipe).scaled(pipeScale, pipeScale).transformed(transform))
             newPipe.setFixedSize(pipeScale + 10, pipeScale + 10)  # offset of 10 as margin
             newPipe.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            newPipe
 
             layout.addWidget(newPipe)
 
@@ -26,7 +30,6 @@ class PipeButtonCreator:
             for otherButton in self.pipeButtons:
                 if toAddButton.getName() != otherButton.getName():
                     toAddButton.setOtherButtons(otherButton)
-
 
 
 

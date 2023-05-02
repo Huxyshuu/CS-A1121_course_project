@@ -24,7 +24,7 @@ class UI:
         self.baseLayout.addLayout(self.rightLayout)
 
         # creates grid buttons i.e. pipes, clear and rotate
-        self.gridButtons()
+        self.gridButtons(0)
 
         # creates inputs and output for the calculations
         self.calculatorUI()
@@ -38,7 +38,7 @@ class UI:
         widget.setLayout(self.baseLayout)
         self.main.setCentralWidget(widget)
 
-    def gridButtons(self):
+    def gridButtons(self, rotation):
         self.main.rotateButton = QPushButton("Rotate")
         self.main.rotateButton.setFixedSize(QSize(100, 60))
         self.main.rotateButton.clicked.connect(self.main.rotatePipes)
@@ -55,20 +55,22 @@ class UI:
 
 
 
-        pipeList = ['../Images/StraightPipe.png',
+        self.pipeList = ['../Images/StraightPipe.png',
                     '../Images/CornerPipe.png',
                     '../Images/TPipe.png',
                     '../Images/SectionPipe.png']
 
         # Adding pipes to topLayout
-        self.main.pipeButtons = PipeButtonCreator(pipeList, 50,
-                                                  self.topLayout).returnPipeButtons()  # list of pipes, pipe scale, layout
+        self.main.pipeButtons = PipeButtonCreator(self.pipeList, 50,
+                                                  self.topLayout,
+                                                  rotation).returnPipeButtons()
+
 
         # Pipes
-        pipeBox = QWidget()
-        self.rightLayout.addWidget(pipeBox)
-        pipeBox.setLayout(self.topLayout)
-        pipeBox.setStyleSheet("QWidget {"
+        self.pipeBox = QWidget()
+        self.rightLayout.addWidget(self.pipeBox)
+        self.pipeBox.setLayout(self.topLayout)
+        self.pipeBox.setStyleSheet("QWidget {"
                               "border: 1px solid black; "
                               "background-color: rgb(180, 180, 180);"
                               "}")
@@ -85,7 +87,24 @@ class UI:
                                             "background-color: rgb(255, 220, 220);"
                                             "border: 2px solid rgb(235, 100, 100);"
                                             "}")
+
+        self.addClearButton()
+
+    def addClearButton(self):
         self.topLayout.addWidget(self.main.clearButton)
+
+
+
+    def refresh(self, rotation):
+        #Remove old instances
+        for icon in self.main.pipeButtons:
+            icon.setParent(None)
+        self.main.clearButton.setParent(None)
+
+        self.main.pipeButtons = PipeButtonCreator(self.pipeList, 50,
+                                                  self.topLayout,
+                                                  rotation).returnPipeButtons()
+        self.addClearButton()
 
     def calculatorUI(self):
         # Left side buttons

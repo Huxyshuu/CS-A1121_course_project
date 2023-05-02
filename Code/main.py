@@ -17,12 +17,13 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("Pipeflow - Hugo")
+        self.pipeRotation = 0
 
         # Sets a fixed window size
         self.setFixedSize(QSize(1280, 850))
 
         # Creates the UI for the program
-        UI(self)
+        self.ui = UI(self)
 
         #self.view is initalized in the UI method
         self.grid = self.view
@@ -43,10 +44,16 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
                 item.remove()
 
     def rotatePipes(self):
-
-        print(self.grid.pipeRotation)
-        self.grid.rotate()
-        print(self.grid.pipeRotation)
+        if self.pipeRotation == 0:
+            self.pipeRotation = 90
+        elif self.pipeRotation == 90:
+            self.pipeRotation = 180
+        elif self.pipeRotation == 180:
+            self.pipeRotation = 270
+        elif self.pipeRotation == 270:
+            self.pipeRotation = 0
+        self.grid.rotate(self.pipeRotation)
+        self.ui.refresh(self.pipeRotation)
 
     def getGrid(self):
         return self.grid

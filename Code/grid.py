@@ -19,6 +19,7 @@ class Grid(QGraphicsView):
         self.height = height
 
         self.pipeType = "../Images/StraightPipe.png"
+        self.pipeRotation = 0
         self.square_size = square_size
 
         # whitespace_x and _y remove empty space between the grid and the border
@@ -29,12 +30,6 @@ class Grid(QGraphicsView):
         self.scene = QGraphicsScene()
         # (1, 1) in the beginning position the center of the grid so that the sides are not visible
         self.scene.setSceneRect(1, 1, width-square_size, height-square_size)
-
-        # Line for testing purposes
-        self.line = QGraphicsLineItem()
-        self.line.setLine(0, 0, 100, 100)
-
-        self.scene.addItem(self.line)
 
         startPoint = []
         endPoint = []
@@ -65,6 +60,12 @@ class Grid(QGraphicsView):
         if not square.isLocked():
             pipe.setPixmap(QPixmap(self.pipeType).scaled(self.square_size - 1, self.square_size))
             pipe.setOffset(square.x * self.square_size + 1, square.y * self.square_size)
+            print(pipe.transformOriginPoint())
+
+            #Handle rotation
+            pipe.setRotation(self.pipeRotation)
+            pipe.setTransformOriginPoint(square.x * square.w + square.w / 2, square.y * square.h + square.h / 2)
+
             self.scene.addItem(pipe)
 
     def removePipe(self, pipe):
@@ -73,11 +74,21 @@ class Grid(QGraphicsView):
     def setType(self, image):
         self.pipeType = image
 
+    def rotate(self):
+        if self.pipeRotation == 0:
+            self.pipeRotation = 90
+        elif self.pipeRotation == 90:
+            self.pipeRotation = 180
+        elif self.pipeRotation == 180:
+            self.pipeRotation = 270
+        elif self.pipeRotation == 270:
+            self.pipeRotation = 0
+
+
     def setPoint(self, square, image):
         point = CalcPoint(self.square_size, image)
         point.setOffset(square.x * self.square_size, square.y * self.square_size)
         self.scene.addItem(point)
-        return
 
     def pickNSquares(self, n):
         #For testing

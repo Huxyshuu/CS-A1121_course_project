@@ -39,19 +39,20 @@ class UI:
         self.main.setCentralWidget(widget)
 
     def gridButtons(self):
-        self.main.clearButton = QPushButton("Clear Grid!")
-        self.main.clearButton.setFixedSize(QSize(100, 60))
-        self.main.clearButton.clicked.connect(self.main.clearGrid)
-        self.main.clearButton.setStyleSheet("QPushButton {"
-                                             "background-color: white;"
-                                             "font-size: 15px;"
-                                             "}"
+        self.main.rotateButton = QPushButton("Rotate")
+        self.main.rotateButton.setFixedSize(QSize(100, 60))
+        self.main.rotateButton.clicked.connect(self.main.rotatePipes)
+        self.main.rotateButton.setStyleSheet("QPushButton {"
+                                            "background-color: white;"
+                                            "font-size: 15px;"
+                                            "}"
 
-                                             "QPushButton:hover {"
-                                             "background-color: rgb(255, 220, 220);"
-                                             "border: 2px solid rgb(235, 100, 100);"
-                                             "}")
-        self.topLayout.addWidget(self.main.clearButton)
+                                            "QPushButton:hover {"
+                                            "background-color: rgb(255, 220, 220);"
+                                            "border: 2px solid rgb(235, 100, 100);"
+                                            "}")
+        self.topLayout.addWidget(self.main.rotateButton)
+
 
 
         pipeList = ['../Images/StraightPipe.png',
@@ -71,6 +72,20 @@ class UI:
                               "border: 1px solid black; "
                               "background-color: rgb(180, 180, 180);"
                               "}")
+
+        self.main.clearButton = QPushButton("Clear Grid!")
+        self.main.clearButton.setFixedSize(QSize(100, 60))
+        self.main.clearButton.clicked.connect(self.main.clearGrid)
+        self.main.clearButton.setStyleSheet("QPushButton {"
+                                            "background-color: white;"
+                                            "font-size: 15px;"
+                                            "}"
+
+                                            "QPushButton:hover {"
+                                            "background-color: rgb(255, 220, 220);"
+                                            "border: 2px solid rgb(235, 100, 100);"
+                                            "}")
+        self.topLayout.addWidget(self.main.clearButton)
 
     def calculatorUI(self):
         # Left side buttons

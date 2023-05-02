@@ -14,6 +14,8 @@ class GridSquare(QGraphicsRectItem):
         # coordinates are divided by the size of the box for easier readability, (1, 1) instead of (w, h)
         self.x = x / w
         self.y = y / h
+        self.w = w
+        self.h = h
         self.__empty = True
         self.__locked = False
         self.grid = grid

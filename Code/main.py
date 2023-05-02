@@ -24,6 +24,11 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         # Creates the UI for the program
         UI(self)
 
+        #self.view is initalized in the UI method
+        self.grid = self.view
+
+
+
     def calculateFlow(self, start, end):
         # two lines below extract the pressure from the text for use in the calculation
         result = start + end
@@ -31,14 +36,20 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         return result
 
     def clearGrid(self):
-        for item in self.view.scene.items():
+        for item in self.grid.scene.items():
             # Gets the name of the class to check if it is a pipe and removes it
             if item.__class__.__name__ == 'GridPipe':
-                self.view.scene.removeItem(item)
+                self.grid.scene.removeItem(item)
                 item.remove()
 
+    def rotatePipes(self):
+
+        print(self.grid.pipeRotation)
+        self.grid.rotate()
+        print(self.grid.pipeRotation)
+
     def getGrid(self):
-        return self.view
+        return self.grid
 
     def changeEndData(self, text):
         if text:

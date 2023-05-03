@@ -71,15 +71,6 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
             self.startData.setText("Starting point pressure: 0 kPa")
 
 
-    # self.pipe = QGraphicsPixmapItem()
-    # self.pipe.setPixmap(QPixmap('../Images/StraightPipe.png').scaled(49, 49))
-    # self.pipe.setOffset(self.x * 50 + 1, self.y * 50)
-    # self.scene.addItem(self.pipe)
-    # self.scene.removeItem(self.pipe)
-
-
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 

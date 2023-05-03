@@ -23,6 +23,13 @@ class UI:
         self.baseLayout.addLayout(self.leftLayout)
         self.baseLayout.addLayout(self.rightLayout)
 
+        notice = QLabel("<b>Notice:</b> <br> Start and End points are currently chosen at random everytime the program is opened.")
+        notice.setMaximumSize(500, 50)
+        notice.setStyleSheet(' border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
+        notice.setAlignment(Qt.AlignmentFlag.AlignTop)
+        self.leftLayout.addWidget(notice)
+
+
         # creates grid buttons i.e. pipes, clear and rotate
         self.gridButtons(0)
 

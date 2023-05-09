@@ -23,11 +23,7 @@ class UI:
         self.baseLayout.addLayout(self.leftLayout)
         self.baseLayout.addLayout(self.rightLayout)
 
-        notice = QLabel("<b>Notice:</b> <br> Start and End points are currently chosen at random everytime the program is opened.")
-        notice.setMaximumSize(500, 50)
-        notice.setStyleSheet(' border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
-        notice.setAlignment(Qt.AlignmentFlag.AlignTop)
-        self.leftLayout.addWidget(notice)
+        # self.notice()
 
 
         # creates grid buttons i.e. pipes, clear and rotate
@@ -44,6 +40,15 @@ class UI:
         widget = QWidget()
         widget.setLayout(self.baseLayout)
         self.main.setCentralWidget(widget)
+
+    def notice(self):
+        noticeText = "<b>Notice:</b> <br> Start and End points are currently chosen at random everytime the program is opened."
+        notice = QLabel(
+            noticeText)
+        notice.setMaximumSize(500, 50)
+        notice.setStyleSheet(' border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
+        notice.setAlignment(Qt.AlignmentFlag.AlignTop)
+        self.leftLayout.addWidget(notice)
 
     def gridButtons(self, rotation):
         self.main.rotateButton = QPushButton("Rotate")
@@ -179,7 +184,7 @@ class UI:
 
         self.main.flowLabel = QLabel("Flow speed: 0 m/s")
         self.main.flowLabel.setStyleSheet("font-size: 15px;")
-        self.main.flowLabel.setFixedHeight(30)
+        self.main.flowLabel.setFixedHeight(70)
 
         calcLayout.addWidget(self.main.flowLabel, alignment=Qt.AlignmentFlag.AlignHCenter)
 

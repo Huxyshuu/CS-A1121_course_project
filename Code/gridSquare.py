@@ -38,13 +38,8 @@ class GridSquare(QGraphicsRectItem):
     def isLocked(self):
         return self.__locked
 
-    # def setPipe(self):
-    #     self.__empty = False
-    #     self.setBrush(QtGui.QColor(20, 20, 20))
-
-    # def removePipe(self):
-    #     self.__empty = True
-    #     self.setBrush(QtGui.QColor(255, 255, 255))
+    def getHeightPosition(self):
+        return 10 - self.y
 
 
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'):

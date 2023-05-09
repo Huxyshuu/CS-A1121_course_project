@@ -1,3 +1,4 @@
+import math
 import sys
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout, \
@@ -32,9 +33,21 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
 
     def calculateFlow(self, start, end):
         # two lines below extract the pressure from the text for use in the calculation
-        result = start + end
-        self.flowLabel.setText("Flow speed: {} m/s".format(result))
-        return result
+        startHeight, endHeight = self.grid.getCalcPoints()
+
+        loss = (4 * 0.01 * math.pow(0.28, 2)) / (math.pow(math.pi, 2) * math.pow(0.3, 5) * 997)
+
+        #v = sqrt(2(P_start - P_end) + 2(pgh_end - pgh_start - h_end*f + h_start*f) / p)
+        calculation = 2 * (start - end) + 2 * (997 * 9.81 * endHeight - 997 * 9.81 * startHeight - endHeight * loss + startHeight * loss) / 997
+
+        if calculation > 0:
+            v = math.sqrt(calculation)
+            result = v
+            self.flowLabel.setText("<p>Flow speed: {} m/s</p>".format(result))
+            return result
+        else:
+            self.flowLabel.setText('<p style="color: red; text-align: center;">Flow speed: ERROR m/s</p>\nPlease set the starting value to be greater than the end')
+            return 0
 
     def clearGrid(self):
         for item in self.grid.scene.items():

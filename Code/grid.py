@@ -48,13 +48,20 @@ class Grid(QGraphicsView):
 
 
         # randomly picks start and end points from the grid using random.choice()
-        self.setPoint(choice(startPoint), '../Images/Start.png')
-        self.setPoint(choice(endPoint), '../Images/End.png')
+        self.start = choice(startPoint)
+        self.end = choice(endPoint)
+
+        self.setPoint(self.start, '../Images/Start.png')
+        self.setPoint(self.end, '../Images/End.png')
+
+
 
 
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
 
+    def getCalcPoints(self):
+        return [self.start.getHeightPosition(), self.end.getHeightPosition()]
 
     def setPipe(self, pipe, square):
         if not square.isLocked():

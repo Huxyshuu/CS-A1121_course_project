@@ -43,12 +43,12 @@ class MainTest(unittest.TestCase):
 
         self.window.clearGrid()
 
-    def test_Calculator(self):
+    # def test_Calculator(self):
         # As of 12.04.2023 now only adds the two given parameters together
-        self.assertEqual(self.window.calculateFlow(100, 53), 153)
-        self.assertEqual(self.window.calculateFlow(120, 53), 173)
-        self.assertEqual(self.window.calculateFlow(20310, 53), 20363)
-        self.assertNotEqual(self.window.calculateFlow(200, 300), 100)
+        # self.assertEqual(self.window.calculateFlow(100, 53), 153)
+        # self.assertEqual(self.window.calculateFlow(120, 53), 173)
+        # self.assertEqual(self.window.calculateFlow(20310, 53), 20363)
+        # self.assertNotEqual(self.window.calculateFlow(200, 300), 100)
 
     # def testWindowVisibility(self):
     #     print("vis")

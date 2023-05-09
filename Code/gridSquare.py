@@ -26,9 +26,6 @@ class GridSquare(QGraphicsRectItem):
         else:
             self.setBrush(QtGui.QColor(255, 255, 255)) # Default color
 
-
-
-
     def isEmpty(self):
         return self.__empty
 
@@ -40,7 +37,6 @@ class GridSquare(QGraphicsRectItem):
 
     def getHeightPosition(self):
         return 10 - self.y
-
 
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'):
         if self.isEmpty():

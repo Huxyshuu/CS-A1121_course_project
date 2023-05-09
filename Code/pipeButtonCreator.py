@@ -19,7 +19,6 @@ class PipeButtonCreator:
             newPipe.setPixmap(QPixmap(pipe).scaled(pipeScale, pipeScale).transformed(transform))
             newPipe.setFixedSize(pipeScale + 10, pipeScale + 10)  # offset of 10 as margin
             newPipe.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            newPipe
 
             layout.addWidget(newPipe)
 

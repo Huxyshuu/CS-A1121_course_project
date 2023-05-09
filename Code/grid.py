@@ -38,13 +38,13 @@ class Grid(QGraphicsView):
         # Creates a GridSquare object for every position in the grid
         for x in range(floor(width/square_size)):
             for y in range(floor(height/square_size)):
-                sq = GridSquare(x * square_size, y * square_size, square_size, square_size, self)
-                self.scene.addItem(sq)
-                self.squares.append(sq)
+                self.sq = GridSquare(x * square_size, y * square_size, square_size, square_size, self)
+                self.scene.addItem(self.sq)
+                self.squares.append(self.sq)
                 if x == 0:
-                    startPoint.append(sq)
+                    startPoint.append(self.sq)
                 if x == floor(self.width / square_size) - 1:
-                    endPoint.append(sq)
+                    endPoint.append(self.sq)
 
 
         # randomly picks start and end points from the grid using random.choice()

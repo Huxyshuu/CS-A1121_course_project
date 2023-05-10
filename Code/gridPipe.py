@@ -1,6 +1,4 @@
-from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QGraphicsPixmapItem
-from PyQt6 import QtWidgets, QtGui
 
 
 class GridPipe(QGraphicsPixmapItem):

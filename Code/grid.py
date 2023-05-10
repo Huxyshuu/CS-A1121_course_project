@@ -3,23 +3,22 @@ from random import choice, shuffle
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QGraphicsView, QGraphicsLineItem, QGraphicsScene, QGraphicsRectItem, QGraphicsPixmapItem, \
-    QLabel
+from PyQt6.QtWidgets import QGraphicsView, QGraphicsScene
 
 from gridSquare import GridSquare
-from gridPipe import GridPipe
 from calcPoint import CalcPoint
 
 
 class Grid(QGraphicsView):
+
+    pipeType = "../Images/StraightPipe.png"
+    pipeRotation = 0
+
     def __init__(self, width, height, square_size):
         super(Grid, self).__init__()
 
         self.width = width
         self.height = height
-
-        self.pipeType = "../Images/StraightPipe.png"
-        self.pipeRotation = 0
         self.square_size = square_size
 
         # whitespace_x and _y remove empty space between the grid and the border
@@ -41,6 +40,8 @@ class Grid(QGraphicsView):
                 self.sq = GridSquare(x * square_size, y * square_size, square_size, square_size, self)
                 self.scene.addItem(self.sq)
                 self.squares.append(self.sq)
+
+                # check if the square is meant for start or end points
                 if x == 0:
                     startPoint.append(self.sq)
                 if x == floor(self.width / square_size) - 1:
@@ -54,9 +55,6 @@ class Grid(QGraphicsView):
         self.setPoint(self.start, '../Images/Start.png')
         self.setPoint(self.end, '../Images/End.png')
 
-
-
-
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
 
@@ -64,6 +62,7 @@ class Grid(QGraphicsView):
         return [self.start.getHeightPosition(), self.end.getHeightPosition()]
 
     def setPipe(self, pipe, square):
+        # check if the square is meant for pipes or start and end points
         if not square.isLocked():
             pipe.setPixmap(QPixmap(self.pipeType).scaled(self.square_size - 1, self.square_size))
             pipe.setOffset(square.x * self.square_size + 1, square.y * self.square_size)
@@ -89,8 +88,8 @@ class Grid(QGraphicsView):
         point.setOffset(square.x * self.square_size, square.y * self.square_size)
         self.scene.addItem(point)
 
+    # For unit-testing purposes
     def pickNSquares(self, n):
-        #For testing
         pickList = self.squares.copy()
         shuffle(pickList)
         wanted = []

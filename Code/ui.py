@@ -1,7 +1,6 @@
 from PyQt6.QtCore import *
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout, \
-    QGraphicsRectItem, QGraphicsScene, QGraphicsView, QGraphicsLineItem, QGraphicsPixmapItem, QLineEdit
-from PyQt6.QtGui import QPalette, QColor, QPixmap, QIntValidator
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout, QLineEdit
+from PyQt6.QtGui import QIntValidator
 
 #custom Classes
 from pipeButtonCreator import PipeButtonCreator
@@ -12,6 +11,10 @@ class UI:
     def __init__(self, main):
         self.main = main
 
+        self.pipeImages = ['../Images/StraightPipe.png',
+                           '../Images/CornerPipe.png',
+                           '../Images/TPipe.png',
+                           '../Images/SectionPipe.png']
 
         # Layout inits
         self.baseLayout = QHBoxLayout()
@@ -23,8 +26,8 @@ class UI:
         self.baseLayout.addLayout(self.leftLayout)
         self.baseLayout.addLayout(self.rightLayout)
 
-        # self.notice()
-
+        # create small notice label
+        self.notice()
 
         # creates grid buttons i.e. pipes, clear and rotate
         self.gridButtons(0)
@@ -42,11 +45,10 @@ class UI:
         self.main.setCentralWidget(widget)
 
     def notice(self):
-        noticeText = "<b>Notice:</b> <br> Start and End points are currently chosen at random everytime the program is opened."
-        notice = QLabel(
-            noticeText)
+        noticeText = "<b>Notice:</b> <br> The start and end points are currently chose randomly"
+        notice = QLabel(noticeText)
         notice.setMaximumSize(500, 50)
-        notice.setStyleSheet(' border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
+        notice.setStyleSheet(' text-align: center; border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
         notice.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.leftLayout.addWidget(notice)
 
@@ -65,24 +67,17 @@ class UI:
                                             "}")
         self.topLayout.addWidget(self.main.rotateButton)
 
-
-
-        self.pipeList = ['../Images/StraightPipe.png',
-                    '../Images/CornerPipe.png',
-                    '../Images/TPipe.png',
-                    '../Images/SectionPipe.png']
-
         # Adding pipes to topLayout
-        self.main.pipeButtons = PipeButtonCreator(self.pipeList, 50,
+        self.main.pipeButtons = PipeButtonCreator(self.pipeImages, 50,
                                                   self.topLayout,
                                                   rotation).returnPipeButtons()
 
 
-        # Pipes
-        self.pipeBox = QWidget()
-        self.rightLayout.addWidget(self.pipeBox)
-        self.pipeBox.setLayout(self.topLayout)
-        self.pipeBox.setStyleSheet("QWidget {"
+        # Toolbar for pipes, reset and clear
+        self.toolBar = QWidget()
+        self.rightLayout.addWidget(self.toolBar)
+        self.toolBar.setLayout(self.topLayout)
+        self.toolBar.setStyleSheet("QWidget {"
                               "border: 1px solid black; "
                               "background-color: rgb(180, 180, 180);"
                               "}")
@@ -105,21 +100,19 @@ class UI:
     def addClearButton(self):
         self.topLayout.addWidget(self.main.clearButton)
 
-
-
     def refresh(self, rotation):
-        #Remove old instances
+        #Remove old instances of buttons
         for icon in self.main.pipeButtons:
             icon.setParent(None)
         self.main.clearButton.setParent(None)
 
-        self.main.pipeButtons = PipeButtonCreator(self.pipeList, 50,
+        # Create new buttons with new settings (rotation)
+        self.main.pipeButtons = PipeButtonCreator(self.pipeImages, 50,
                                                   self.topLayout,
                                                   rotation).returnPipeButtons()
         self.addClearButton()
 
     def calculatorUI(self):
-        # Left side buttons
         # Start input
         startLayout = QVBoxLayout()
         startLayout.setContentsMargins(20, 0, 20, 0)
@@ -155,7 +148,6 @@ class UI:
         endInput.setValidator(QIntValidator(0, 100000))
         endInput.textChanged.connect(self.main.changeEndData)
         endInput.setStyleSheet("font-size: 15px;")
-        # endInput.setFixedWidth(50)
         self.main.endData = QLabel("End point pressure: 0 kPa")
         self.main.endData.setStyleSheet("font-size: 13px;")
         self.main.endData.setFixedSize(400, 30)
@@ -175,7 +167,7 @@ class UI:
                                  "QPushButton:hover {"
                                  "background-color: lightgray;"
                                  "}")
-        # PyCharm showing a warning on .connect, but it works.
+
         calcButton.clicked.connect(
             lambda: self.main.calculateFlow(int(self.main.startData.text().split(":")[1][:-4].strip()),
                                             int(self.main.endData.text().split(":")[1][:-4].strip())))

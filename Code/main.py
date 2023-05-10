@@ -1,23 +1,20 @@
 import math
 import sys
 from PyQt6.QtCore import *
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout, \
-    QGraphicsRectItem, QGraphicsScene, QGraphicsView, QGraphicsLineItem, QGraphicsPixmapItem, QLineEdit
-from PyQt6.QtGui import QPalette, QColor, QPixmap, QIntValidator
+from PyQt6.QtWidgets import QApplication, QMainWindow
 
 #custom Classes
-from grid import Grid
-from gridPipe import GridPipe
-from pipeButtonCreator import PipeButtonCreator
 from ui import UI
 
-
-class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better control over the window customization
+# Creating a subclass of QMainWindow for better control over the window customization
+class MainWindow(QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("Pipeflow - Hugo")
+
+        #default rotation of the pipes
         self.pipeRotation = 0
 
         # Sets a fixed window size
@@ -38,11 +35,11 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
         loss = (4 * 0.01 * math.pow(0.28, 2)) / (math.pow(math.pi, 2) * math.pow(0.3, 5) * 997)
 
         #v = sqrt(2(P_start - P_end) + 2(pgh_end - pgh_start - h_end*f + h_start*f) / p)
-        calculation = 2 * (start - end) + 2 * (997 * 9.81 * endHeight - 997 * 9.81 * startHeight - endHeight * loss + startHeight * loss) / 997
+        bernoulli = 2 * (start - end) + 2 * (997 * 9.81 * endHeight - 997 * 9.81 * startHeight - endHeight * loss + startHeight * loss) / 997
 
-        if calculation > 0:
-            v = math.sqrt(calculation)
-            result = v
+        if bernoulli > 0:
+            result = math.sqrt(bernoulli)
+            # flowLabel is found in UI class
             self.flowLabel.setText("<p>Flow speed: {} m/s</p>".format(result))
             return result
         else:
@@ -57,20 +54,17 @@ class MainWindow(QMainWindow): # Creating a subclass of QMainWindow for better c
                 item.remove()
 
     def rotatePipes(self):
-        if self.pipeRotation == 0:
-            self.pipeRotation = 90
-        elif self.pipeRotation == 90:
-            self.pipeRotation = 180
-        elif self.pipeRotation == 180:
-            self.pipeRotation = 270
-        elif self.pipeRotation == 270:
+        if self.pipeRotation == 270:
             self.pipeRotation = 0
+        else:
+            self.pipeRotation += 90
         self.grid.rotate(self.pipeRotation)
         self.ui.refresh(self.pipeRotation)
 
     def getGrid(self):
         return self.grid
 
+    # Last 2 methods default the pressure to 0 if input fields are empty
     def changeEndData(self, text):
         if text:
             self.endData.setText("End point pressure: {} kPa".format(text))

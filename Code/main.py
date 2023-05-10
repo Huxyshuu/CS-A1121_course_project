@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
 
     def calculateFlow(self, start, end):
         # two lines below extract the pressure from the text for use in the calculation
-        startHeight, endHeight = self.grid.getCalcPoints()
+        startHeight, endHeight = self.grid.getHeights()
 
         loss = (4 * 0.01 * math.pow(0.28, 2)) / (math.pow(math.pi, 2) * math.pow(0.3, 5) * 997)
 

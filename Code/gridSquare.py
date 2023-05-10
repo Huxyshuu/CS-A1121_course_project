@@ -36,9 +36,6 @@ class GridSquare(QGraphicsRectItem):
     def isLocked(self):
         return self.__locked
 
-    def getHeightPosition(self):
-        return 10 - self.y
-
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'):
         if self.isEmpty():
             self.grid.setPipe(self.pipe, self)  # Set the pipe for this square in the grid
@@ -46,3 +43,12 @@ class GridSquare(QGraphicsRectItem):
         else:
             self.grid.removePipe(self.pipe)  # Remove the pipe from the grid
             self.setEmpty(True)
+
+        if self.x == 0:
+            self.grid.removeCalcPoint("start")
+            self.grid.setCalcPoints(self, '../Images/Start.png', "start")
+
+        if self.x == floor(self.grid.width / self.w) - 1:
+            self.grid.removeCalcPoint("end")
+            self.grid.setCalcPoints(self, '../Images/End.png', "end")
+

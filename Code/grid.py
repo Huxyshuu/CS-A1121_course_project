@@ -21,6 +21,10 @@ class Grid(QGraphicsView):
         self.height = height
         self.square_size = square_size
 
+        # Start and end points are stored here
+        self.currentStart = ""
+        self.currentEnd = ""
+
         # whitespace_x and _y remove empty space between the grid and the border
         whitespace_x = width % square_size
         whitespace_y = height % square_size
@@ -30,8 +34,8 @@ class Grid(QGraphicsView):
         # (1, 1) in the beginning position the center of the grid so that the sides are not visible
         self.scene.setSceneRect(1, 1, width-square_size, height-square_size)
 
-        startPoint = []
-        endPoint = []
+        self.startPoints = []
+        self.endPoints = []
         self.squares = []
 
         # Creates a GridSquare object for every position in the grid
@@ -43,23 +47,30 @@ class Grid(QGraphicsView):
 
                 # check if the square is meant for start or end points
                 if x == 0:
-                    startPoint.append(self.sq)
+                    self.startPoints.append(self.sq)
                 if x == floor(self.width / square_size) - 1:
-                    endPoint.append(self.sq)
-
+                    self.endPoints.append(self.sq)
 
         # randomly picks start and end points from the grid using random.choice()
-        self.start = choice(startPoint)
-        self.end = choice(endPoint)
-
-        self.setPoint(self.start, '../Images/Start.png')
-        self.setPoint(self.end, '../Images/End.png')
+        self.setCalcPoints(choice(self.startPoints), '../Images/Start.png', "start")
+        self.setCalcPoints(choice(self.endPoints), '../Images/End.png', "end")
 
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
 
-    def getCalcPoints(self):
-        return [self.start.getHeightPosition(), self.end.getHeightPosition()]
+    def setCalcPoints(self, point, image, type):
+        self.setPoint(point, image, type)
+
+    def removeCalcPoint(self, type):
+        if type == "start":
+            self.scene.removeItem(self.currentStart)
+        else:
+            self.scene.removeItem(self.currentEnd)
+
+
+
+    def getHeights(self):
+        return [self.currentStart.getHeightPosition(), self.currentEnd.getHeightPosition()]
 
     def setPipe(self, pipe, square):
         # check if the square is meant for pipes or start and end points
@@ -82,11 +93,14 @@ class Grid(QGraphicsView):
     def rotate(self, rotation):
         self.pipeRotation = rotation
 
-
-    def setPoint(self, square, image):
-        point = CalcPoint(self.square_size, image)
-        point.setOffset(square.x * self.square_size, square.y * self.square_size)
+    def setPoint(self, gridSquare, image, type):
+        point = CalcPoint(image, gridSquare)
+        point.setOffset(gridSquare.x * self.square_size, gridSquare.y * self.square_size)
         self.scene.addItem(point)
+        if type == "start":
+            self.currentStart = point
+        else:
+            self.currentEnd = point
 
     # For unit-testing purposes
     def pickNSquares(self, n):

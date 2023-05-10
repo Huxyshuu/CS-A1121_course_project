@@ -45,10 +45,13 @@ class UI:
         self.main.setCentralWidget(widget)
 
     def notice(self):
-        noticeText = "<b>Notice:</b> <br> The start and end points are currently chose randomly"
+        noticeText = "<b>Instructions:</b> <br> 1. Choose the desired start and end point heights by clicking on colored squares in the grid" \
+                     "<br>2. Build a pipeline connecting both points by placing pipes and rotating them" \
+                     '<br>3. Enter the start and end pressures in (kPa) and press "Calculate Flow!"' \
+                     '<br><br>The y-axis of the grid is height and x-axis the width, each square is 1m x 1m'
         notice = QLabel(noticeText)
-        notice.setMaximumSize(500, 50)
-        notice.setStyleSheet(' text-align: center; border: 2px solid rgb(255, 84, 124); padding: 2px; background-color: rgb(255, 186, 213)')
+        notice.setMaximumSize(500, 110)
+        notice.setStyleSheet(' text-align: center; border: 2px solid rgb(255, 206, 79); padding: 2px; background-color: rgb(255, 237, 191)')
         notice.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.leftLayout.addWidget(notice)
 

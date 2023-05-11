@@ -52,22 +52,19 @@ class Grid(QGraphicsView):
                     self.endPoints.append(self.sq)
 
         # randomly picks start and end points from the grid using random.choice()
-        self.setCalcPoints(choice(self.startPoints), '../Images/Start.png', "start")
-        self.setCalcPoints(choice(self.endPoints), '../Images/End.png', "end")
+        self.setPoint(choice(self.startPoints), '../Images/Start.png', "start")
+        self.setPoint(choice(self.endPoints), '../Images/End.png', "end")
 
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
 
-    def setCalcPoints(self, point, image, type):
-        self.setPoint(point, image, type)
-
     def removeCalcPoint(self, type):
         if type == "start":
+            self.currentStart.removePoint()
             self.scene.removeItem(self.currentStart)
         else:
+            self.currentEnd.removePoint()
             self.scene.removeItem(self.currentEnd)
-
-
 
     def getHeights(self):
         return [self.currentStart.getHeightPosition(), self.currentEnd.getHeightPosition()]
@@ -92,6 +89,13 @@ class Grid(QGraphicsView):
 
     def rotate(self, rotation):
         self.pipeRotation = rotation
+
+    def clearGrid(self):
+        for item in self.scene.items():
+            # Gets the name of the class to check if it is a pipe and removes it
+            if item.__class__.__name__ == 'GridPipe':
+                self.scene.removeItem(item)
+                item.remove()
 
     def setPoint(self, gridSquare, image, type):
         point = CalcPoint(image, gridSquare)

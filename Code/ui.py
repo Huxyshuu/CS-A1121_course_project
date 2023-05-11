@@ -29,16 +29,17 @@ class UI:
         # create small notice label
         self.notice()
 
+        # Grid (750, 750, 50) is a good size for a window of size (1280, 850)
+        self.grid = Grid(750, 750, 75)  # Width, Height, Square size
+        self.grid.show()
+
         # creates grid buttons i.e. pipes, clear and rotate
         self.gridButtons(0)
 
         # creates inputs and output for the calculations
         self.calculatorUI()
 
-        # Grid (750, 750, 50) is a good size for a window of size (1280, 850)
-        self.main.view = Grid(750, 750, 75)  # Width, Height, Square size
-        self.main.view.show()
-        self.rightLayout.addWidget(self.main.view)
+        self.rightLayout.addWidget(self.grid)
 
         widget = QWidget()
         widget.setLayout(self.baseLayout)
@@ -87,7 +88,7 @@ class UI:
 
         self.main.clearButton = QPushButton("Clear Grid!")
         self.main.clearButton.setFixedSize(QSize(100, 60))
-        self.main.clearButton.clicked.connect(self.main.clearGrid)
+        self.main.clearButton.clicked.connect(self.grid.clearGrid)
         self.main.clearButton.setStyleSheet("QPushButton {"
                                             "background-color: white;"
                                             "font-size: 15px;"
@@ -115,6 +116,19 @@ class UI:
                                                   rotation).returnPipeButtons()
         self.addClearButton()
 
+    # Last 2 methods default the pressure to 0 if input fields are empty
+    def changeEndData(self, text):
+        if text:
+            self.endData.setText("End point pressure: {} kPa".format(text))
+        else:
+            self.endData.setText("End point pressure: 0 kPa")
+
+    def changeStartData(self, text):
+        if text:
+            self.startData.setText("Starting point pressure: {} kPa".format(text))
+        else:
+            self.startData.setText("Starting point pressure: 0 kPa")
+
     def calculatorUI(self):
         # Start input
         startLayout = QVBoxLayout()
@@ -128,15 +142,15 @@ class UI:
         startLabel.setStyleSheet("font-size: 15px;")
         startInput = QLineEdit()
         startInput.setValidator(QIntValidator(0, 100000))
-        startInput.textChanged.connect(self.main.changeStartData)
+        startInput.textChanged.connect(self.changeStartData)
         startInput.setStyleSheet("font-size: 15px;")
-        self.main.startData = QLabel("Starting point pressure: 0 kPa")
-        self.main.startData.setStyleSheet("font-size: 13px;")
-        self.main.startData.setFixedSize(400, 30)
+        self.startData = QLabel("Starting point pressure: 0 kPa")
+        self.startData.setStyleSheet("font-size: 13px;")
+        self.startData.setFixedSize(400, 30)
 
         startInputLayout.addWidget(startLabel)
         startInputLayout.addWidget(startInput)
-        startLayout.addWidget(self.main.startData)
+        startLayout.addWidget(self.startData)
 
         # End input
         endLayout = QVBoxLayout()
@@ -149,15 +163,15 @@ class UI:
         endLabel.setStyleSheet("font-size: 15px;")
         endInput = QLineEdit()
         endInput.setValidator(QIntValidator(0, 100000))
-        endInput.textChanged.connect(self.main.changeEndData)
+        endInput.textChanged.connect(self.changeEndData)
         endInput.setStyleSheet("font-size: 15px;")
-        self.main.endData = QLabel("End point pressure: 0 kPa")
-        self.main.endData.setStyleSheet("font-size: 13px;")
-        self.main.endData.setFixedSize(400, 30)
+        self.endData = QLabel("End point pressure: 0 kPa")
+        self.endData.setStyleSheet("font-size: 13px;")
+        self.endData.setFixedSize(400, 30)
 
         endInputLayout.addWidget(endLabel)
         endInputLayout.addWidget(endInput)
-        endLayout.addWidget(self.main.endData)
+        endLayout.addWidget(self.endData)
 
         calcLayout = QVBoxLayout()
         self.leftLayout.addLayout(calcLayout)
@@ -172,8 +186,8 @@ class UI:
                                  "}")
 
         calcButton.clicked.connect(
-            lambda: self.main.calculateFlow(int(self.main.startData.text().split(":")[1][:-4].strip()),
-                                            int(self.main.endData.text().split(":")[1][:-4].strip())))
+            lambda: self.main.calculateFlow(int(self.startData.text().split(":")[1][:-4].strip()),
+                                            int(self.endData.text().split(":")[1][:-4].strip())))
 
         calcLayout.addWidget(calcButton, alignment=Qt.AlignmentFlag.AlignHCenter)
 

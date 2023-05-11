@@ -46,9 +46,9 @@ class GridSquare(QGraphicsRectItem):
 
         if self.x == 0:
             self.grid.removeCalcPoint("start")
-            self.grid.setCalcPoints(self, '../Images/Start.png', "start")
+            self.grid.setPoint(self, '../Images/Start.png', "start")
 
         if self.x == floor(self.grid.width / self.w) - 1:
             self.grid.removeCalcPoint("end")
-            self.grid.setCalcPoints(self, '../Images/End.png', "end")
+            self.grid.setPoint(self, '../Images/End.png', "end")
 

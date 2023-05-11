@@ -13,7 +13,11 @@ class MainTest(unittest.TestCase):
         self.window = MainWindow()
         self.window.show()  # Makes the window visible
 
-        self.grid = self.window.view
+        # Creates the UI for the program
+        self.ui = UI(self)
+
+        # self.view is initalized in the UI method
+        self.grid = self.ui.grid
 
 
     def test_Grid(self):

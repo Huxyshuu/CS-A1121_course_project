@@ -58,14 +58,6 @@ class Grid(QGraphicsView):
         self.setScene(self.scene)
         self.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
 
-    def removeCalcPoint(self, type):
-        if type == "start":
-            self.currentStart.removePoint()
-            self.scene.removeItem(self.currentStart)
-        else:
-            self.currentEnd.removePoint()
-            self.scene.removeItem(self.currentEnd)
-
     def getHeights(self):
         return [self.currentStart.getHeightPosition(), self.currentEnd.getHeightPosition()]
 
@@ -105,6 +97,14 @@ class Grid(QGraphicsView):
             self.currentStart = point
         else:
             self.currentEnd = point
+
+    def removeCalcPoint(self, type):
+        if type == "start":
+            self.currentStart.removePoint()
+            self.scene.removeItem(self.currentStart)
+        else:
+            self.currentEnd.removePoint()
+            self.scene.removeItem(self.currentEnd)
 
     # For unit-testing purposes
     def pickNSquares(self, n):

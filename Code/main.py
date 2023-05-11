@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
         if bernoulli > 0:
             result = math.sqrt(bernoulli)
             # flowLabel is found in UI class
-            self.flowLabel.setText("<p>Flow speed: {} m/s</p>".format(result))
+            self.flowLabel.setText("<p>Flow speed: {:.3f} m/s</p>".format(result))
             return result
         else:
             self.flowLabel.setText('<p style="color: red; text-align: center;">Flow speed: ERROR m/s</p>\nPlease set the starting value to be greater than the end')

@@ -1,40 +1,23 @@
-# Pipe flow
+# Pipe flow - Hugo Tamm
 
-## Checkpoint 2 (12.4.2023)
+## Introduction
+### Final project (12.05.2023)
+Pictures of the project
 
-![Image of tests being completed](https://i.imgur.com/y0YhwgF.png)
+![Picture of the program](https://i.imgur.com/wMXlqTV.png)
 
-- Added two tests
-    - test_Grid(): For testing the adding and deleting of pipes
-    - test_Calculator(): For testing the "Calculate" button, despite currently only summing the given parameters
+![Picture of the unit-testing](https://i.imgur.com/KC58IRA.png)
+![Picture of the UML diagram](https://i.imgur.com/T2PbnL8.png)
+The pipe flow program is a simulation created for the calculations of flow speed through a pipe system. Given the starting and ending points, their heights and pressure, we can calculate the flow speed using extended Bernoulli's equation.
 
+## File and folder structure
+- There are three folders in the repository,
+    - Code, which contains all of the source code for the program as well as unit-testing in the file named projectTest.py
+    - Documents, which contain both the initial program plan and the final documentation of the entire project
+    - Images, which contain necessary image files for the program to work, such as the icons for pipes
 
-## Checkpoint 1 (21.3.2023)
-
-Image of the current state of the program
-![Image of the program](https://i.imgur.com/J1p30Bm.png)
-
-
-### Existing features
-- Adding pipes to the grid by clicking an empty square
-- Deleting pipes by clicking them in the grid
-- Switching between different placeable objects (4 pipes as of now)
-- Clear grid button for clearing the entire grid of all present objects
-- Two inputs for pressure at start and end points
-- Start and end points are initialized at random positions marked in lightred
-- Calculate button works, despite currently only adding the two given values together
-
-
-### Planned features
-- Feature to rotate or automatically have pipes rotate to form a proper pipeline
-- Proper math calculation between two points
-- Possibly more objects, such as a pump or a valve
-- A pipe minigame
-- Responsive layout or atleast window size
-
-
-### Installation
-Ideally the steps below would work:
+## Installation
+Ideally the steps below would work for the installation:
 1. Create a new folder for the project to be cloned into
 2. Open a command terminal in that folder
 3. Type:
@@ -65,16 +48,24 @@ pip install --upgrade pip
 ```bash
 pip install PyQt6
 ```
-6. Profit
+6. The program should now open up when the main.py file is  booted through an IDE or any console
 
+## Usage
+The program can be used in 3 simple steps:
+1. Choose the heights for both the starting and ending points (A and B)
+2. Build a pipesystem to connect these points
+3. Enter desired pressure values in kPa units and click "Calculate Flow!"-button
+4. For further use, the grid can be cleared to build a new pipesystem, though currently it doesn't impact the calculation results at all :(
 
-### Usage
-The program at its current state is not useful.
+## Existing features
+- Adding pipes to the grid by clicking an empty square
+- Deleting pipes by clicking them in the grid
+- Switching between different placeable objects (4 pipes)
+- Clear grid button for clearing the entire grid of all present objects
+- Rotate button for rotating the pipes
+- Two inputs for pressure at start and end points
+- Start and end points are initialized at random positions and can be moved by clicking on the colored area of the grid
+- Calculate button works, despite the calculations most likely being inaccurate
 
-
-### Schedule
-Estimated time spent on the project: ~20 hours. The initial planned schedule has not been followed, though progress seems to be ahead of the initial estimates.
-
-
-### Other
-The code behind adding objects to the grid has become very messy and hard to navigate. It's unclear what classes interact with eachother and how they are used.
+## Checkpoints have been moved
+Checkpoints have been moved to another README file called 'README_OLD', allowing for this to be the main README containing all the information of the current and the final state of the project.

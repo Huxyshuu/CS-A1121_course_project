@@ -1,33 +1,19 @@
 import sys
 import unittest
-import math
 
 import PyQt6
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QApplication, QPushButton, QLineEdit, QLabel, QGraphicsView, QGraphicsScene
 from main import MainWindow
 from ui import UI
 from grid import Grid
 from clickableLabel import ClickableLabel
-from gridSquare import GridSquare
 
 app = QApplication(sys.argv)
 
 class TestMain(unittest.TestCase):
 
     window = MainWindow()
-
-    # calculateFlow not really working :(
-    # def test_calculateFlow_with_valid_input(self):
-    #     expected_result = math.sqrt((2 * (10 - 5) + 2 * 9.81 * (5 - 0) + 0.1) / (997 * (math.pi * math.pow(0.3, 2))))
-    #     actual_result = self.window.calculateFlow(10, 5)
-    #     self.assertEqual(expected_result, actual_result)
-    #
-    # def test_calculateFlow_with_end_less_than_start(self):
-    #     expected_result = 0
-    #     actual_result = self.window.calculateFlow(5, 10)
-    #     self.assertEqual(expected_result, actual_result)
 
     def test_rotatePipes(self):
         # Test that the pipe rotation angle is correctly updated after calling the rotatePipes method.
@@ -232,7 +218,6 @@ class TestGrid(unittest.TestCase):
         self.assertEqual(self.pipeCount, 0)
 
         grid.clearGrid()
-
 
 if __name__ == "__main__":
     unittest.main()

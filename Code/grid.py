@@ -31,7 +31,7 @@ class Grid(QGraphicsView):
         self.setFixedSize(width - whitespace_x, height-whitespace_y)
 
         self.scene = QGraphicsScene()
-        # (1, 1) in the beginning position the center of the grid so that the sides are not visible
+        # Positions the center of the grid so that the sides are not visible
         self.scene.setSceneRect(1, 1, width-square_size, height-square_size)
 
         self.startPoints = []
@@ -67,7 +67,7 @@ class Grid(QGraphicsView):
             pipe.setPixmap(QPixmap(self.pipeType).scaled(self.square_size - 1, self.square_size))
             pipe.setOffset(square.x * self.square_size + 1, square.y * self.square_size)
 
-            #Handle rotation
+            # Handle rotation
             pipe.setRotation(self.pipeRotation)
             pipe.setTransformOriginPoint(square.x * square.w + square.w / 2, square.y * square.h + square.h / 2)
 

@@ -14,7 +14,8 @@ class CalcPoint(QtWidgets.QGraphicsPixmapItem):
         self.gridSquare.setEmpty(True)
 
     def getHeightPosition(self):
-        return 10 - self.gridSquare.y
+        GRID_HEIGHT = 10
+        return GRID_HEIGHT - self.gridSquare.y
 
     def getSquare(self):
         return self.gridSquare

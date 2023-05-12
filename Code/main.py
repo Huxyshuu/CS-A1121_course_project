@@ -18,7 +18,9 @@ class MainWindow(QMainWindow):
         self.pipeRotation = 0
 
         # Sets a fixed window size
-        self.setFixedSize(QSize(1280, 850))
+        WINDOW_WIDTH = 1280
+        WINDOW_HEIGHT = 850
+        self.setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT))
 
         # Creates the UI for the program
         self.ui = UI(self)
@@ -29,13 +31,8 @@ class MainWindow(QMainWindow):
 
 
     def calculateFlow(self, start, end):
-        # two lines below extract the pressure from the text for use in the calculation
+        # the line below extracts the pressure from the text for use in the calculation
         startHeight, endHeight = self.grid.getHeights()
-
-        # loss = (4 * 0.01 * math.pow(0.28, 2)) / (math.pow(math.pi, 2) * math.pow(0.3, 5) * 997)
-
-        #v = sqrt(2(P_start - P_end) + 2(pgh_end - pgh_start - h_end*f + h_start*f) / p)
-        # bernoulli = 2 * (start - end) + 2 * (997 * 9.81 * endHeight - 997 * 9.81 * startHeight - endHeight * loss + startHeight * loss) / 997
 
         bernoulli = ((2*(start-end) + 2*9.81*(startHeight-endHeight) + 0.1) / (997*(math.pi * math.pow(0.3, 2))))
 

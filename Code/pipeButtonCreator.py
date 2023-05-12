@@ -27,28 +27,27 @@ class PipeButtonCreator:
             # Load the pipe image file, scale it to the desired size, and apply the rotation transformation
             newPipe.setPixmap(QPixmap(pipe).scaled(pipeScale, pipeScale).transformed(transform))
 
-            # Set the size of the clickable label to include a margin of 10 pixels
+            # Set the size of the button to include a margin of 10 pixels
             newPipe.setFixedSize(pipeScale + 10, pipeScale + 10)
 
-            # Center the image inside the clickable label
+            # Center the image inside the button
             newPipe.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-            # Add the clickable label to the given layout
+            # Add the button to the given layout
             layout.addWidget(newPipe)
 
-            # Add the clickable label to the list of pipe buttons
+            # Add the button to the list of pipe buttons
             self.pipeButtons.append(newPipe)
 
-        # Loop through each clickable label in the list of pipe buttons
+        # Loop through each button in the list of pipe buttons
         for toAddButton in self.pipeButtons:
-            # Loop through each clickable label again to compare with the current one
+            # Loop through each button again to compare with the current one
             for otherButton in self.pipeButtons:
-                # Check if the current label is not the same as the one being compared
+                # Check if the button is not the same as the one being compared
                 if toAddButton.getName() != otherButton.getName():
-                    # If they are different, add the other label to the list of other buttons for the current label
+                    # If they are different, add the other button to the list of other buttons for the button
                     toAddButton.setOtherButtons(otherButton)
 
-    # Function to return the list of pipe buttons
     def returnPipeButtons(self):
         return self.pipeButtons
 

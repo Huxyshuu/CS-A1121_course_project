@@ -21,15 +21,15 @@ class ClickableLabel(QtWidgets.QLabel):
     def getType(self):
         return self.__type
 
-    # Add another clickable label to the list of other buttons for this label
+    # Add another button to the list of other buttons for this label
     def setOtherButtons(self, button):
         self.__otherButtons.append(button)
 
-    # Return the list of other buttons for this label
+    # Return the list of other buttons for this button
     def getOtherButtons(self):
         return self.__otherButtons
 
-    # Set the name of the label to the given string
+    # Set the name of the button to the given string
     def setName(self, name):
         self.__name = name
 
@@ -37,11 +37,11 @@ class ClickableLabel(QtWidgets.QLabel):
     def getName(self):
         return self.__name
 
-    # Return whether or not the label is currently selected
+    # Return whether or not the button is currently selected
     def isSelected(self):
         return self.__selected
 
-    # Set this label to be selected and deselect all other labels in the list of other buttons
+    # Set this button to be selected and deselect all other buttons in the list of other buttons
     def setSelected(self):
         for button in self.getOtherButtons():
             button.removeSelected()
@@ -55,13 +55,13 @@ class ClickableLabel(QtWidgets.QLabel):
         grid = main.getGrid()
         grid.setType(self.getType())
 
-    # Deselect this label by setting selected status to false and resetting the background color
+    # Deselect this button by setting selected status to false and resetting the background color
     def removeSelected(self):
         self.__selected = False
         self.setStyleSheet("background-color: white;")
 
     def mousePressEvent(self, ev: QtGui.QMouseEvent):
         if not self.isSelected():
-            # If the label is not currently selected, select it
+            # If the button is not currently selected, select it
             self.setSelected()
 

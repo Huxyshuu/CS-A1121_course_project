@@ -30,11 +30,16 @@ class UI:
         self.notice()
 
         # Grid (750, 750, 50) is a good size for a window of size (1280, 850)
-        self.grid = Grid(750, 750, 75)  # Width, Height, Square size
+        GRID_WIDTH = 750
+        GRID_HEIGHT = 750
+        SQUARE_SIZE = 75
+
+        self.grid = Grid(GRID_WIDTH, GRID_HEIGHT, SQUARE_SIZE)
         self.grid.show()
 
         # creates grid buttons i.e. pipes, clear and rotate
-        self.gridButtons(0)
+        DEFAULT_ROTATION = 0
+        self.gridButtons(DEFAULT_ROTATION)
 
         # creates inputs and output for the calculations
         self.calculatorUI()
@@ -77,7 +82,7 @@ class UI:
                                                   rotation).returnPipeButtons()
 
 
-        # Toolbar for pipes, reset and clear
+        # Toolbar for pipes, rotate and clear
         self.toolBar = QWidget()
         self.rightLayout.addWidget(self.toolBar)
         self.toolBar.setLayout(self.topLayout)
@@ -110,7 +115,7 @@ class UI:
             icon.setParent(None)
         self.main.clearButton.setParent(None)
 
-        # Create new buttons with new settings (rotation)
+        # Create new buttons with new rotation
         self.main.pipeButtons = PipeButtonCreator(self.pipeImages, 50,
                                                   self.topLayout,
                                                   rotation).returnPipeButtons()

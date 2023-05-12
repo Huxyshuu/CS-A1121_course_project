@@ -10,6 +10,8 @@ Pictures of the project
 ![Picture of the UML diagram](https://i.imgur.com/T2PbnL8.png)
 The pipe flow program is a simulation created for the calculations of flow speed through a pipe system. Given the starting and ending points, their heights and pressure, we can calculate the flow speed using extended Bernoulli's equation.
 
+The program is recommended to be viewed on a screen larger than 1280x850, due to the window being a fixed size and not scaling down to smaller screens.
+
 ## File and folder structure
 - There are three folders in the repository,
     - Code, which contains all of the source code for the program as well as unit-testing in the file named projectTest.py
@@ -18,6 +20,18 @@ The pipe flow program is a simulation created for the calculations of flow speed
 
 ## Installation
 Ideally the steps below would work for the installation:
+1. Create a new folder for the project to be downloaded into
+2. Open a command terminal in the Code folder
+3. Make sure that you have a version of python 3.6.1 or above installed
+4. Installing python is as simple as navigating to the download section on their official website: [Download Python](https://www.python.org/downloads/)
+5. Type into the command terminal:
+```bash
+python main.py
+```
+6. The program should now open up
+
+In case that doesn't work, the following steps should give an alternative way
+
 1. Create a new folder for the project to be cloned into
 2. Open a command terminal in that folder
 3. Type:
